@@ -9,6 +9,7 @@
 #include "heatmap.h"
 
 class Scene01;
+class Scene02;
 
 class App
 {
@@ -32,6 +33,7 @@ private:
 
 	Text			m_text;
 
-	Scene01*		m_pScene;
+	Scene01*		m_pScene01;
+	Scene02*		m_pScene02;
 };
 

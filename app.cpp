@@ -17,20 +17,23 @@
 #include "object.h"
 #include "texture.h"
 #include "scene01.h"
+#include "scene02.h"
 #include "app.h"
 
 //-----------------------------------------------------------------------------
 App::App()
 //-----------------------------------------------------------------------------
 {
-	m_pScene = NULL;
+	m_pScene01 = NULL;
+	m_pScene02 = NULL;
 }
 
 //-----------------------------------------------------------------------------
 App::~App()
 //-----------------------------------------------------------------------------
 {
-	delete(m_pScene);
+	delete(m_pScene01);
+	delete(m_pScene02);
 }
 
 //-----------------------------------------------------------------------------
@@ -44,9 +47,16 @@ unsigned int App::Init()
 	glGenTextures(1, &m_textureHeatmap);
 	m_heatmapTextureData = new unsigned char[m_heatmap.m_width*m_heatmap.m_height * 3];
 
-	//scene
-	m_pScene = new(Scene01);
-	if (m_pScene->Init() != R_OK)
+	//scene01
+	m_pScene01 = new(Scene01);
+	if (m_pScene01->Init() != R_OK)
+	{
+		return R_ERROR;
+	}
+
+	//scene02
+	m_pScene02 = new(Scene02);
+	if (m_pScene02->Init() != R_OK)
 	{
 		return R_ERROR;
 	}
@@ -106,7 +116,10 @@ void App::Update(float xpos, float ypos)
 void App::Render(float time)
 //-----------------------------------------------------------------------------
 {
-	m_pScene->Render(time);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	m_pScene01->Render(time);
+	m_pScene02->Render(time);
 
 	m_text.Render(1, 1, "Predictable");
 }

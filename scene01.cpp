@@ -73,8 +73,6 @@ void Scene01::Render(float time)
 	glm::vec3 up		= glm::vec3(0, 1, 0);
 	glm::mat4 viewMatrix = glm::lookAt(position, direction, up);
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 	glUseProgram(m_pShader->m_program);
 
 	glActiveTexture(GL_TEXTURE0);
