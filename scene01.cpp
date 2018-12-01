@@ -32,12 +32,9 @@ Scene01::~Scene01()
 }
 
 //-----------------------------------------------------------------------------
-int Scene01::Init()
+unsigned int Scene01::Init()
 //-----------------------------------------------------------------------------
 {
-	glGenVertexArrays(1, &m_vertexArrayId);
-	glBindVertexArray(m_vertexArrayId);
-
 	m_object.CreateCube(1);
 
 	m_pShader = new(CShader);
@@ -48,12 +45,7 @@ int Scene01::Init()
 	m_pTexture = new(CTexture);
 	m_pTexture->Generate(256, 256, 0);
 
-	// Set default GL state
-	glClearColor(0.0f, 0.5f, 0.4f, 0.0f);
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
-
-	return 1;
+	return R_OK;
 }
 
 //-----------------------------------------------------------------------------

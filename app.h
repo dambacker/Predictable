@@ -17,11 +17,11 @@ public:
 	~App();
 
 public:
-	int  Init();
-	void Cleanup();
+	unsigned int	Init();
+	void			Cleanup();
 
-	void Update(float xpos, float ypos);
-	void Render(float time);
+	void			Update(float xpos, float ypos);
+	void			Render(float time);
 
 private:
 	Heatmap			m_heatmap;

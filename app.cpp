@@ -34,7 +34,7 @@ App::~App()
 }
 
 //-----------------------------------------------------------------------------
-int App::Init()
+unsigned int App::Init()
 //-----------------------------------------------------------------------------
 {
 	m_text.Init(80, 50);
@@ -46,10 +46,13 @@ int App::Init()
 
 	//scene
 	m_pScene = new(Scene01);
-	m_pScene->Init();
+	if (m_pScene->Init() != R_OK)
+	{
+		return R_ERROR;
+	}
 
 	// Set default GL state
-	glGenVertexArrays(1, &m_vertexArrayId);
+	glGenVertexArrays(1, &m_vertexArrayId);	//not sure why this is required
 	glBindVertexArray(m_vertexArrayId);
 	glClearColor(0.0f, 0.5f, 0.4f, 0.0f);
 	glEnable(GL_DEPTH_TEST);
@@ -105,6 +108,6 @@ void App::Render(float time)
 {
 	m_pScene->Render(time);
 
-	m_text.Render(1, 1, "First test of text!");
+	m_text.Render(1, 1, "Predictable");
 }
 

@@ -18,23 +18,17 @@ public:
 	~Scene01();
 
 public:
-	int  Init();
-	void Cleanup();
+	unsigned int	Init();
+	void			Cleanup();
 
-	void Update();
-	void Render(float time);
+	void			Update();
+	void			Render(float time);
 
 private:
-//	GLuint			m_programId;
-	GLuint			m_matrixId;
-	GLuint			m_textureId;
-//	GLuint			m_texture;
-	GLuint			m_textureHeatmap;
-	unsigned char*	m_heatmapTextureData;
-	GLuint			m_vertexArrayId;
-
 	Object			m_object;
 	CShader*		m_pShader;
+	GLuint			m_matrixId;
+	GLuint			m_textureId;
 	CTexture*		m_pTexture;
 };
 
