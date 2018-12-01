@@ -4,6 +4,14 @@
 
 #pragma once
 
+#include <sstream>
+
+typedef enum
+{
+	R_OK		= 0,
+	R_ERROR		= 1,
+} TReturnCode;
+
 void*	SafeMalloc(size_t size);
 void	_SafeFree(void* ptr);
 #define SafeFree(ptr)	{_SafeFree((void*)(ptr));(ptr)=NULL;}

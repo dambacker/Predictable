@@ -21,20 +21,16 @@ public:
 	void Cleanup();
 
 	void Update(float xpos, float ypos);
-	void Render(float time, float xpos, float ypos);
+	void Render(float time);
 
 private:
-	GLuint			m_programId;
-	GLuint			m_matrixId;
-	GLuint			m_textureId;
-	GLuint			m_texture;
+	Heatmap			m_heatmap;
 	GLuint			m_textureHeatmap;
 	unsigned char*	m_heatmapTextureData;
+
 	GLuint			m_vertexArrayId;
-	Object			m_object;
 
 	Text			m_text;
-	Heatmap			m_heatmap;
 
 	Scene01*		m_pScene;
 };
