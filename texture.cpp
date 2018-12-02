@@ -30,6 +30,59 @@ CTexture::~CTexture()
 }
 
 //-----------------------------------------------------------------------------
+unsigned int CTexture::Generate(unsigned int width, unsigned int height, unsigned int pattern)
+//-----------------------------------------------------------------------------
+{
+	unsigned int	size	= width*height*4;
+	unsigned char*	pData	= (unsigned char*)SafeMalloc(size);
+
+	switch (pattern)
+	{
+	default:
+	case 0:
+		for (unsigned int y=0; y<height; y++)
+		{
+			for (unsigned int x=0; x<width; x++)
+			{
+				pData[(x+y*width)*4+0] = x % 0xFF;
+				pData[(x+y*width)*4+1] = y % 0xFF;
+				pData[(x+y*width)*4+2] = (((x/4+y/4))%2) * 0xFF;
+				pData[(x+y*width)*4+3] = 0xFF;
+			}
+		}
+		break;
+	case 1:
+		for (unsigned int y=0; y<height; y++)
+		{
+			for (unsigned int x=0; x<width; x++)
+			{
+				pData[(x+y*width)*4+0] = (x*0xFF/width);
+				pData[(x+y*width)*4+1] = (y*0xFF/height);
+				pData[(x+y*width)*4+2] = (((x/8+y/8))%2) * 0xFF;
+				pData[(x+y*width)*4+3] = 0x80;
+			}
+		}
+		break;
+	}
+
+	glGenTextures(1, &m_texture);
+	glBindTexture(GL_TEXTURE_2D, m_texture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pData);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+
+	/* DEBUG */
+	glGenerateMipmap(GL_TEXTURE_2D);	//let's not do this
+	/* DEBUG */
+
+	free(pData);
+
+	return R_OK;
+}
+
+//-----------------------------------------------------------------------------
 unsigned int CTexture::LoadBmp(const char* pFilePath)
 //-----------------------------------------------------------------------------
 {
@@ -92,37 +145,3 @@ unsigned int CTexture::LoadKtx(const char* pFilePath)
 	return R_OK;
 }
 
-//-----------------------------------------------------------------------------
-unsigned int CTexture::Generate(unsigned int width, unsigned int height, unsigned int pattern)
-//-----------------------------------------------------------------------------
-{
-	unsigned int	size	= width*height*4;
-	unsigned char*	pData	= (unsigned char*)SafeMalloc(size);
-
-	for (unsigned int y=0; y<height; y++)
-	{
-		for (unsigned int x=0; x<width; x++)
-		{
-			pData[(x+y*width)*4+0] = x % 0xFF;
-			pData[(x+y*width)*4+1] = y % 0xFF;
-			pData[(x+y*width)*4+2] = (((x/4+y/4))%2) * 0xFF;
-			pData[(x+y*width)*4+3] = 0xFF;
-		}
-	}
-
-	glGenTextures(1, &m_texture);
-	glBindTexture(GL_TEXTURE_2D, m_texture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_BGRA, GL_UNSIGNED_BYTE, pData);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-
-	/* DEBUG */
-	glGenerateMipmap(GL_TEXTURE_2D);	//let's not do this
-	/* DEBUG */
-
-	free(pData);
-
-	return R_OK;
-}

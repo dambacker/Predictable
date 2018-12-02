@@ -11,6 +11,6 @@ void main()
 {
     gl_Position = modelViewProjection * vec4(position, 0, 1);
 
-	texcoords = texcoordAttributes;
+	texcoords = texcoordIn;
 }
 
