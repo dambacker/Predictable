@@ -43,7 +43,8 @@ unsigned int Scene02::Init()
 	m_textureId = glGetUniformLocation(m_pShader->m_program, "textureSampler");
 
 	m_pTexture = new(CTexture);
-	m_pTexture->Generate(256, 256, 1);
+//	m_pTexture->Generate(256, 256, 1);
+	m_pTexture->LoadKtx("textures/rgba-reference.ktx");
 
 	return R_OK;
 }
@@ -77,7 +78,8 @@ void Scene02::Render(float time)
 	glUniform1i(m_textureId, 0);
 
 	glm::mat4 MVP = glm::mat4(1.0);
-//	MVP = glm::translate(MVP, glm::vec3(0, 0.1, 0));
+	MVP = glm::translate(MVP, glm::vec3(0, 0.1, 0));
+	MVP = glm::scale(MVP, glm::vec3(0.5, 0.5, 0));
 	glUniformMatrix4fv(m_matrixId, 1, GL_FALSE, &MVP[0][0]);
 
 	m_object.Draw();

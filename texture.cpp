@@ -14,6 +14,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include <ktx.h>
+
 #include "utils.h"
 #include "texture.h"
 
@@ -139,9 +141,59 @@ unsigned int CTexture::LoadBmp(const char* pFilePath)
 }
 
 //-----------------------------------------------------------------------------
+unsigned int CTexture::LoadAstc(unsigned int width, unsigned int height, unsigned int level, const char* pFilePath)
+//-----------------------------------------------------------------------------
+{
+	unsigned char* pData = NULL;
+
+	unsigned int dataSize = LoadFileToMemory(pFilePath, &pData);
+	if (dataSize == 0)
+	{
+		printf("Can't open file %s.\n", pFilePath);
+		return R_ERROR;
+	}
+
+	glGenTextures(1, &m_texture);
+	glBindTexture(GL_TEXTURE_2D, m_texture);
+//	glCompressedTexImage2D(GL_TEXTURE_2D, level, GL_COMPRESSED_RGBA_ASTC_4x4, width, height, 0, dataSize, pData);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+	free(pData);
+
+	return R_OK;
+}
+
+//-----------------------------------------------------------------------------
 unsigned int CTexture::LoadKtx(const char* pFilePath)
 //-----------------------------------------------------------------------------
 {
+	GLenum			target		= GL_TEXTURE_2D;
+	KTX_dimensions	dimensions	= {0, 0, 0};
+	GLboolean		mipmapped	= GL_FALSE;
+	GLenum			glerror		= 0;
+	
+	glGenTextures(1, &m_texture);
+
+	if (ktxLoadTextureN(pFilePath, &m_texture, &target, &dimensions, &mipmapped, &glerror, NULL, NULL) != KTX_SUCCESS)
+	{
+		return R_ERROR;
+	}
+
+	glTexParameteri(target, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(target, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(target, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	if (mipmapped)
+	{
+		glTexParameteri(target, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	}
+	else
+	{
+		glTexParameteri(target, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	}
+
 	return R_OK;
 }
 

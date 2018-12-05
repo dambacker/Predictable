@@ -118,10 +118,10 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>KTX_OPENGL;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\glew-2.1.0\include;..\glm-0.9.9.2;..\glfw-3.2.1\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\glew-2.1.0\include;..\glm-0.9.9.2;..\glfw-3.2.1\include;..\include;src\KTX</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -176,6 +176,7 @@
     <ClInclude Include="scene01.h" />
     <ClInclude Include="scene02.h" />
     <ClInclude Include="shader.h" />
+    <ClInclude Include="src\KTX\ktx.h" />
     <ClInclude Include="text.h" />
     <ClInclude Include="texture.h" />
     <ClInclude Include="utils.h" />
@@ -194,6 +195,21 @@
     <ClCompile Include="scene01.cpp" />
     <ClCompile Include="scene02.cpp" />
     <ClCompile Include="shader.cpp" />
+    <ClCompile Include="src\KTX\checkheader.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\KTX\etcdec.cxx">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\KTX\etcunpack.cxx">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\KTX\loader.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\KTX\swap.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="text.cpp" />
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="utils.cpp" />

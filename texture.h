@@ -13,6 +13,7 @@ public:
 public:
 	unsigned int	Generate(unsigned int width, unsigned int height, unsigned int pattern);
 	unsigned int	LoadBmp(char const* pFilePath);
+	unsigned int	LoadAstc(unsigned int width, unsigned int height, unsigned int level, const char* pFilePath);
 	unsigned int	LoadKtx(char const* pFilePath);
 
 public:
