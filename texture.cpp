@@ -176,7 +176,6 @@ unsigned int CTexture::LoadKtx(const char* pFilePath)
 	GLenum			glerror		= 0;
 	
 	glGenTextures(1, &m_texture);
-
 	if (ktxLoadTextureN(pFilePath, &m_texture, &target, &dimensions, &mipmapped, &glerror, NULL, NULL) != KTX_SUCCESS)
 	{
 		return R_ERROR;
@@ -187,11 +186,11 @@ unsigned int CTexture::LoadKtx(const char* pFilePath)
 	glTexParameteri(target, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	if (mipmapped)
 	{
-		glTexParameteri(target, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(target, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	}
 	else
 	{
-		glTexParameteri(target, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glTexParameteri(target, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	}
 
 	return R_OK;

@@ -45,6 +45,7 @@ unsigned int Scene02::Init()
 	m_pTexture = new(CTexture);
 //	m_pTexture->Generate(256, 256, 1);
 	m_pTexture->LoadKtx("textures/rgba-reference.ktx");
+//	m_pTexture->LoadKtx("textures/image_painting.ktx");
 
 	return R_OK;
 }
