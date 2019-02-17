@@ -43,9 +43,8 @@ unsigned int Scene02::Init()
 	m_textureId = glGetUniformLocation(m_pShader->m_program, "textureSampler");
 
 	m_pTexture = new(CTexture);
-//	m_pTexture->Generate(256, 256, 1);
-	m_pTexture->LoadKtx("textures/rgba-reference.ktx");
-//	m_pTexture->LoadKtx("textures/image_painting.ktx");
+//	m_pTexture->LoadKtx("textures/rgba-reference.ktx");
+	m_pTexture->Generate(256, 256, CTexture::GAUSSIAN);
 
 	return R_OK;
 }
@@ -66,9 +65,6 @@ void Scene02::Update()
 void Scene02::Render(float time)
 //-----------------------------------------------------------------------------
 {
-	//GL state
-	glDisable(GL_CULL_FACE);
-	glDisable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 

@@ -43,7 +43,7 @@ unsigned int Scene01::Init()
 	m_textureId = glGetUniformLocation(m_pShader->m_program, "textureSampler");
 
 	m_pTexture = new(CTexture);
-	m_pTexture->Generate(256, 256, 0);
+	m_pTexture->Generate(256, 256, CTexture::GAUSSIAN);
 
 	return R_OK;
 }

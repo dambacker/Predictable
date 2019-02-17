@@ -32,7 +32,7 @@ CTexture::~CTexture()
 }
 
 //-----------------------------------------------------------------------------
-unsigned int CTexture::Generate(unsigned int width, unsigned int height, unsigned int pattern)
+unsigned int CTexture::Generate(unsigned int width, unsigned int height, Pattern pattern)
 //-----------------------------------------------------------------------------
 {
 	unsigned int	size	= width*height*4;
@@ -41,7 +41,7 @@ unsigned int CTexture::Generate(unsigned int width, unsigned int height, unsigne
 	switch (pattern)
 	{
 	default:
-	case 0:
+	case BASIC1:
 		for (unsigned int y=0; y<height; y++)
 		{
 			for (unsigned int x=0; x<width; x++)
@@ -53,7 +53,7 @@ unsigned int CTexture::Generate(unsigned int width, unsigned int height, unsigne
 			}
 		}
 		break;
-	case 1:
+	case BASIC2:
 		for (unsigned int y=0; y<height; y++)
 		{
 			for (unsigned int x=0; x<width; x++)
@@ -62,6 +62,30 @@ unsigned int CTexture::Generate(unsigned int width, unsigned int height, unsigne
 				pData[(x+y*width)*4+1] = (y*0xFF/height);
 				pData[(x+y*width)*4+2] = (((x/8+y/8))%2) * 0xFF;
 				pData[(x+y*width)*4+3] = 0x80;
+			}
+		}
+		break;
+	case GAUSSIAN:
+		for (unsigned int y=0; y<height; y++)
+		{
+			for (unsigned int x=0; x<width; x++)
+			{
+				float scale  = 8.0f;
+				float offset = 0.5f;
+				float xf = ((float)x/(float)width  - offset) * scale;
+				float yf = ((float)y/(float)height - offset) * scale;
+
+				//2D gaussian distribution https://en.wikipedia.org/wiki/Gaussian_function#Two-dimensional_Gaussian_function
+				float A = 1.0f;
+				float a = 0.5f;
+				float b = 0.0f;
+				float c = 0.5f;
+				float g = A * expf(-(a*xf*xf + 2.0f*b*xf*yf + c*yf*yf));
+
+				pData[(x+y*width)*4+0] = (unsigned char)(g*0xFF);
+				pData[(x+y*width)*4+1] = (unsigned char)(g*0xFF);
+				pData[(x+y*width)*4+2] = (unsigned char)(g*0xFF);
+				pData[(x+y*width)*4+3] = 0xFF;
 			}
 		}
 		break;
