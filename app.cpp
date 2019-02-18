@@ -10,6 +10,7 @@
 #include <vector>
 
 #include <GL/glew.h>
+#include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -40,6 +41,7 @@ App::~App()
 unsigned int App::Init()
 //-----------------------------------------------------------------------------
 {
+	m_mouse.Init();
 	m_text.Init(80, 50);
 
 	//heatmap
@@ -113,14 +115,30 @@ void App::Update(float xpos, float ypos)
 }
 
 //-----------------------------------------------------------------------------
+void App::Mouse(float mouseX, float mouseY, int mouseButton1)
+//-----------------------------------------------------------------------------
+{
+	m_mouseX		= mouseX;
+	m_mouseY		= mouseY;
+	m_mouseButton1	= mouseButton1;
+
+	if (m_mouseButton1 == GLFW_PRESS)
+	{
+		Update(m_mouseX, m_mouseY);
+	}
+}
+
+//-----------------------------------------------------------------------------
 void App::Render(float time)
 //-----------------------------------------------------------------------------
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	m_pScene01->Render(time);
-	m_pScene02->Render(time);
+//	m_pScene02->Render(time);
 
 	m_text.Render(1, 1, "Predictable");
+
+	m_mouse.Render(m_mouseX, m_mouseY);
 }
 

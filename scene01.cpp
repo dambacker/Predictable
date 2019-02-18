@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2018, Dam Backer
+// Copyright (C) 2018-2019, Dam Backer
 //
 
 #include "pch.h"
@@ -43,7 +43,7 @@ unsigned int Scene01::Init()
 	m_textureId = glGetUniformLocation(m_pShader->m_program, "textureSampler");
 
 	m_pTexture = new(CTexture);
-	m_pTexture->Generate(256, 256, CTexture::GAUSSIAN);
+	m_pTexture->LoadKtx("textures/rgba-reference.ktx");
 
 	return R_OK;
 }

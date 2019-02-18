@@ -5,6 +5,7 @@
 #pragma once
 
 #include <vector>
+#include "mouse.h"
 #include "text.h"
 #include "heatmap.h"
 
@@ -21,6 +22,7 @@ public:
 	unsigned int	Init();
 	void			Cleanup();
 
+	void			Mouse(float mouseX, float mouseY, int mouseButton1);
 	void			Update(float xpos, float ypos);
 	void			Render(float time);
 
@@ -31,6 +33,11 @@ private:
 
 	GLuint			m_vertexArrayId;
 
+	float			m_mouseX;
+	float			m_mouseY;
+	int				m_mouseButton1;
+
+	CMouse			m_mouse;
 	Text			m_text;
 
 	Scene01*		m_pScene01;

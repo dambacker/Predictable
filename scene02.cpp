@@ -43,7 +43,6 @@ unsigned int Scene02::Init()
 	m_textureId = glGetUniformLocation(m_pShader->m_program, "textureSampler");
 
 	m_pTexture = new(CTexture);
-//	m_pTexture->LoadKtx("textures/rgba-reference.ktx");
 	m_pTexture->Generate(256, 256, CTexture::GAUSSIAN);
 
 	return R_OK;
