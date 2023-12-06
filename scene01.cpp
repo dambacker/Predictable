@@ -32,20 +32,23 @@ Scene01::~Scene01()
 }
 
 //-----------------------------------------------------------------------------
-unsigned int Scene01::Init()
+unsigned int Scene01::Init(float aspectX, float aspectY)
 //-----------------------------------------------------------------------------
 {
-	m_object.CreateCube(1);
+    m_aspectX = aspectX;
+    m_aspectY = aspectY;
 
-	m_pShader = new(CShader);
-	m_pShader->LoadFromFile("shaders/shader00.vs", "shaders/shader00.fs");
-	m_matrixId  = glGetUniformLocation(m_pShader->m_program, "modelViewProjection");
-	m_textureId = glGetUniformLocation(m_pShader->m_program, "textureSampler");
+    m_object.CreateQuad();
 
-	m_pTexture = new(CTexture);
-	m_pTexture->LoadKtx("textures/rgba-reference.ktx");
+    m_pShader = new(CShader);
+    m_pShader->LoadFromFile("shaders/blit2D.vs", "shaders/blit2D.fs");
+    m_matrixId  = glGetUniformLocation(m_pShader->m_program, "modelViewProjection");
+    m_textureId = glGetUniformLocation(m_pShader->m_program, "textureSampler");
 
-	return R_OK;
+    m_pTexture = new(CTexture);
+    m_pTexture->LoadKtx("textures/image_painting.ktx");
+
+    return R_OK;
 }
 
 //-----------------------------------------------------------------------------
@@ -64,33 +67,20 @@ void Scene01::Update()
 void Scene01::Render(float time)
 //-----------------------------------------------------------------------------
 {
-	float fov = 45.0;
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	glm::mat4 projectionMatrix = glm::perspective(glm::radians(fov), 4.0f / 3.0f, 0.1f, 100.0f);
+    glUseProgram(m_pShader->m_program);
 
-	glm::vec3 position	= glm::vec3(0, 0, 5.0f);
-	glm::vec3 direction	= glm::vec3(0, 0, 0);
-	glm::vec3 up		= glm::vec3(0, 1, 0);
-	glm::mat4 viewMatrix = glm::lookAt(position, direction, up);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, m_pTexture->m_texture);
+    glUniform1i(m_textureId, 0);
 
-	glUseProgram(m_pShader->m_program);
+    glm::mat4 mvp = glm::mat4(1.0);
+//  mvp = glm::translate(mvp, glm::vec3(0, 0.1, 0));
+    mvp = glm::scale(mvp, glm::vec3(0.95f * m_aspectX, 0.95f * m_aspectY, 0));
+    glUniformMatrix4fv(m_matrixId, 1, GL_FALSE, &mvp[0][0]);
 
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, m_pTexture->m_texture);
-	glUniform1i(m_textureId, 0);
-
-	glDisable(GL_CULL_FACE);
-	glDisable(GL_DEPTH_TEST);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	glm::mat4 modelMatrix;
-	glm::mat4 MVP;
-	modelMatrix = glm::rotate(glm::mat4(1.0), time, glm::vec3(0, 1.0, 0));
-//	modelMatrix = glm::rotate(glm::mat4(1.0), 0.0f, glm::vec3(0, 1.0, 0));
-	MVP = projectionMatrix * viewMatrix * modelMatrix;
-	glUniformMatrix4fv(m_matrixId, 1, GL_FALSE, &MVP[0][0]);
-
-	m_object.Draw();
+    m_object.Draw();
 }
 

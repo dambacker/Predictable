@@ -32,12 +32,12 @@ void Object::CreateQuad()
 	static const GLfloat vertexBufferData[] =
 	{
 		  1.0f, 1.0f,	   1.0f, 1.0f,
-		 -1.0f,-1.0f,	   0.0f, 0.0f,
 		 -1.0f, 1.0f,	   0.0f, 1.0f,
+		 -1.0f,-1.0f,	   0.0f, 0.0f,
 
 		  1.0f, 1.0f,	   1.0f, 1.0f,
-		  1.0f,-1.0f,	   1.0f, 0.0f,
 		 -1.0f,-1.0f,	   0.0f, 0.0f,
+		  1.0f,-1.0f,	   1.0f, 0.0f,
 	};
 
 	m_vertexSize = 2;
@@ -149,6 +149,7 @@ void Object::CreateCube2(int divs)
 
 	m_numAttributes = 2;
 
+	//TODO: change all objects to use generic attribInfo instead of m_vertexSize + m_texcoordSize
 	m_attribInfo[0].attrib	= ATTRIB_VERTEX;
 	m_attribInfo[0].size	= 3;
 	m_attribInfo[0].type	= GL_FLOAT;
@@ -160,21 +161,21 @@ void Object::CreateCube2(int divs)
 	static const GLfloat vertexBufferData[] =
 	{
 		//-x
-		-1.0f,-1.0f,-1.0f,     0.0f, 0.0f,
-		-1.0f,-1.0f, 1.0f,	   0.0f, 1.0f,
-		-1.0f, 1.0f, 1.0f,	   1.0f, 1.0f,
+		-1.0f,-1.0f,-1.0f,     1.0f, 0.0f,
+		-1.0f,-1.0f, 1.0f,	   0.0f, 0.0f,
+		-1.0f, 1.0f, 1.0f,	   0.0f, 1.0f,
 
-		-1.0f,-1.0f,-1.0f,	   0.0f, 0.0f,
-		-1.0f, 1.0f, 1.0f,	   1.0f, 1.0f,
-		-1.0f, 1.0f,-1.0f,	   1.0f, 0.0f,
+		-1.0f,-1.0f,-1.0f,	   1.0f, 0.0f,
+		-1.0f, 1.0f, 1.0f,	   0.0f, 1.0f,
+		-1.0f, 1.0f,-1.0f,	   1.0f, 1.0f,
 		//+x
 		 1.0f, 1.0f, 1.0f,	   1.0f, 1.0f,
 		 1.0f,-1.0f,-1.0f,	   0.0f, 0.0f,
-		 1.0f, 1.0f,-1.0f,	   1.0f, 0.0f,
+		 1.0f, 1.0f,-1.0f,	   0.0f, 1.0f,
 
 		 1.0f,-1.0f,-1.0f,	   0.0f, 0.0f,
 		 1.0f, 1.0f, 1.0f,	   1.0f, 1.0f,
-		 1.0f,-1.0f, 1.0f,	   0.0f, 1.0f,
+		 1.0f,-1.0f, 1.0f,	   1.0f, 0.0f,
 		 //-y
 		  1.0f,-1.0f, 1.0f,	   1.0f, 1.0f,
 		 -1.0f,-1.0f,-1.0f,	   0.0f, 0.0f,
@@ -200,15 +201,17 @@ void Object::CreateCube2(int divs)
 		  1.0f,-1.0f,-1.0f,	   1.0f, 0.0f,
 		 -1.0f,-1.0f,-1.0f,	   0.0f, 0.0f,
 		 //+z				  
-		 -1.0f, 1.0f, 1.0f,	   0.0f, 1.0f,
-		 -1.0f,-1.0f, 1.0f,	   0.0f, 0.0f,
-		  1.0f,-1.0f, 1.0f,	   1.0f, 0.0f,
+		 -1.0f, 1.0f, 1.0f,	   1.0f, 1.0f,
+		 -1.0f,-1.0f, 1.0f,	   1.0f, 0.0f,
+		  1.0f,-1.0f, 1.0f,	   0.0f, 0.0f,
 
-		  1.0f, 1.0f, 1.0f,	   1.0f, 1.0f,
-		 -1.0f, 1.0f, 1.0f,	   0.0f, 1.0f,
-		  1.0f,-1.0f, 1.0f,	   1.0f, 0.0f,
+		  1.0f, 1.0f, 1.0f,	   0.0f, 1.0f,
+		 -1.0f, 1.0f, 1.0f,	   1.0f, 1.0f,
+		  1.0f,-1.0f, 1.0f,	   0.0f, 0.0f,
 	};
 
+	m_vertexSize = 3;
+	m_texcoordSize = 2;
 	m_indexCount = 36;
 
 	static const GLshort indexBufferData[] =

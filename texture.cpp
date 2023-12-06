@@ -85,7 +85,7 @@ unsigned int CTexture::Generate(unsigned int width, unsigned int height, Pattern
 				pData[(x+y*width)*4+0] = (unsigned char)(g*0xFF);
 				pData[(x+y*width)*4+1] = (unsigned char)(g*0xFF);
 				pData[(x+y*width)*4+2] = (unsigned char)(g*0xFF);
-				pData[(x+y*width)*4+3] = 0xFF;
+				pData[(x+y*width)*4+3] = (unsigned char)(g*0xFF);
 			}
 		}
 		break;

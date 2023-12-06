@@ -51,13 +51,13 @@ int CMouse::Init()
 
 	static const GLfloat vertexBufferData[] =
 	{
-		1.0f, 1.0f,	   1.0f, 1.0f,
-		-1.0f,-1.0f,   0.0f, 0.0f,
+		 1.0f, 1.0f,   1.0f, 1.0f,
 		-1.0f, 1.0f,   0.0f, 1.0f,
-
-		1.0f, 1.0f,	   1.0f, 1.0f,
-		1.0f,-1.0f,	   1.0f, 0.0f,
 		-1.0f,-1.0f,   0.0f, 0.0f,
+
+		 1.0f, 1.0f,   1.0f, 1.0f,
+		-1.0f,-1.0f,   0.0f, 0.0f,
+		 1.0f,-1.0f,   1.0f, 0.0f,
 	};
 
 	glGenBuffers(1, &m_vertexBuffer);
@@ -79,19 +79,14 @@ void CMouse::Render(float x, float y)
 	glUniform1i(m_textureId, 0);
 
 	float scale = 0.05f;		//size of cursor
-	float mx = (x*2.0f-1.0f);	//scale and offset
-	float my = (1.0f-2.0f*y);	//scale and offset and flip y
 
 	float mvp[4][4] = 
 	{
-		scale, 0.0f, 0.0f, 0.0f,
-		0.0f, scale, 0.0f, 0.0f,
-		0.0f, 0.0f,  0.0f, 0.0f,
-		mx,   my,    0.0f, 1.0f,
+		scale, 0.0f,  0.0f, 0.0f,
+		0.0f,  scale, 0.0f, 0.0f,
+		0.0f,  0.0f,  0.0f, 0.0f,
+		x,     y,     0.0f, 1.0f,
 	};
-//	glm::mat4 MVP = glm::mat4(1.0);
-//	MVP = glm::translate(MVP, glm::vec3(x*2.0f-1.0f, 1.0f-2.0f*y, 0));
-//	MVP = glm::scale(MVP, glm::vec3(0.05, 0.05, 0));
 	glUniformMatrix4fv(m_matrixId, 1, GL_FALSE, &mvp[0][0]);
 
 	glDisable(GL_DEPTH_TEST);

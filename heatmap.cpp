@@ -44,6 +44,12 @@ void Heatmap::Init()
 void Heatmap::Add(unsigned int x, unsigned int y)
 //-----------------------------------------------------------------------------
 {
+    if ((x >= m_width) || (y >= m_height))
+    {
+        //TODO: record mouse hits outside the heatmap as well
+        return;
+    }
+
 	m_pData[x][y]++;
 	m_total++;
 	if (m_pData[x][y] > m_max)

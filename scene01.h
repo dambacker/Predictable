@@ -18,13 +18,15 @@ public:
 	~Scene01();
 
 public:
-	unsigned int	Init();
+	unsigned int	Init(float aspectX, float aspectY);
 	void			Cleanup();
 
 	void			Update();
 	void			Render(float time);
 
 private:
+	float			m_aspectX;
+	float			m_aspectY;
 	Object			m_object;
 	CShader*		m_pShader;
 	GLuint			m_matrixId;
