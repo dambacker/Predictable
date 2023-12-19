@@ -74,6 +74,8 @@
     <LinkIncremental>true</LinkIncremental>
     <LibraryPath>..\glew-2.1.0\lib\Debug\Win32;$(LibraryPath)</LibraryPath>
     <IncludePath>..\glew-2.1.0\include;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -90,16 +92,17 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;_GLFW_USE_OPENGL;_GLFW_WIN32;_GLFW_WGL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>KTX_OPENGL;WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;_GLFW_USE_OPENGL;_GLFW_WIN32;_GLFW_WGL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>GLFW\include;..\glm-0.9.9.2</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\glew-2.1.0\include;..\glm-0.9.9.2;..\glfw-3.2.1\include;..\include;src\KTX</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glew32d.lib;glu32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew_shared.lib;glfw_shared.lib;glu32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
     </Link>
     <CustomBuildStep>
       <Command>
